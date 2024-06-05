@@ -73,7 +73,7 @@ for (let i = 0; i < 4; i++) {
   createBoard(titlearr[i], 1, colorarr[i]);
 }
 // CreateTask function
-const createTask = (describtion, number) => {
+const createTask = (desc, number) => {
   // list
   const list = document.getElementsByClassName("list")[number];
   list.classList.add("list");
@@ -88,7 +88,7 @@ const createTask = (describtion, number) => {
   card.appendChild(circle);
   circle.innerHTML = circlesvg;
   card.appendChild(cardp);
-  cardp.innerText = describtion;
+  cardp.innerText = desc;
   card.appendChild(edit);
   edit.innerHTML = editsvg;
   card.appendChild(trash);
