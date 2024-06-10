@@ -35,12 +35,6 @@ button.innerText = "Add Task";
 // container
 const container = document.createElement("div");
 container.classList.add("container");
-
-const titlearr = ["To do", "In progress", "Done", "Blocked"];
-for (let index = 0; index < titlearr.length; index++) {}
-const colorarr = ["white", "yellow", "green", "red"];
-for (let i = 0; i < colorarr.length; i++) {}
-
 const createBoard = (text, countValue, color) => {
   // board
   const board = document.createElement("div");
@@ -69,9 +63,6 @@ const createBoard = (text, countValue, color) => {
   board.appendChild(list);
   body.appendChild(container);
 };
-for (let i = 0; i < 4; i++) {
-  createBoard(titlearr[i], 1, colorarr[i]);
-}
 // CreateTask function
 const createTask = (desc, number) => {
   // list
@@ -95,18 +86,32 @@ const createTask = (desc, number) => {
   trash.innerHTML = trashsvg;
   list.appendChild(card);
 };
-
+const boardkk = [
+  {
+    title: "to do",
+    color: "white",
+  },
+  {
+    title: "In progress",
+    color: "yellow",
+  },
+  {
+    title: "Done",
+    color: "green",
+  },
+  {
+    title: "Blocked",
+    color: "red",
+  },
+];
+boardkk.map((element) => {
+  createBoard(element.title, 5, element.color);
+});
 createTask("Hello world", 0);
 createTask("Hello world", 0);
 createTask("Hello world2", 1);
-createTask("Hello world2", 1);
-createTask("Hello world2", 1);
-createTask("Hello world3", 2);
-createTask("Hello world3", 2);
 createTask("Hello world3", 2);
 createTask("Hello world3", 2);
 createTask("Hello world3", 3);
 createTask("Hello world3", 3);
-createTask("Hello world3", 3);
-createTask("Hello world3", 3);
-createTask("Hello world3", 3);
+createTask("Hello world4", 3);
