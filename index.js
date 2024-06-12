@@ -1,4 +1,4 @@
-const body = document.getElementsByTagName("body")[0];
+const body = document.getElementsByTagName('body')[0];
 // svg
 const circlesvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" stroke="white"/>
@@ -25,31 +25,33 @@ const trashsvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
 </svg>
 `;
 // top button
-const topbutton = document.createElement("div");
-topbutton.classList.add("topbutton");
-const button = document.createElement("button");
+const topbutton = document.createElement('div');
+topbutton.classList.add('topbutton');
+const button = document.createElement('button');
 // top button
 body.appendChild(topbutton);
 topbutton.appendChild(button);
-button.innerText = "Add Task";
+button.innerText = 'Add Task';
 // container
-const container = document.createElement("div");
-container.classList.add("container");
+const container = document.createElement('div');
+container.classList.add('container');
+
+// create board
 const createBoard = (text, countValue, color) => {
   // board
-  const board = document.createElement("div");
-  board.classList.add("board");
+  const board = document.createElement('div');
+  board.classList.add('board');
   // list
-  const list = document.createElement("div");
-  list.classList.add("list");
+  const list = document.createElement('div');
+  list.classList.add('list');
   // top title
-  const title = document.createElement("div");
-  title.classList.add("title");
-  const tasktitle = document.createElement("div");
-  tasktitle.classList.add("tasktitle");
-  const titleh = document.createElement("h4");
-  const taskp = document.createElement("p");
-  const taskbutton = document.createElement("button");
+  const title = document.createElement('div');
+  title.classList.add('title');
+  const tasktitle = document.createElement('div');
+  tasktitle.classList.add('tasktitle');
+  const titleh = document.createElement('h4');
+  const taskp = document.createElement('p');
+  const taskbutton = document.createElement('button');
   // task title
   board.appendChild(title);
   title.appendChild(tasktitle);
@@ -64,17 +66,17 @@ const createBoard = (text, countValue, color) => {
   body.appendChild(container);
 };
 // CreateTask function
-const createTask = (desc, number) => {
+const createTask = (desc, index) => {
   // list
-  const list = document.getElementsByClassName("list")[number];
-  list.classList.add("list");
+  const list = document.getElementsByClassName('list')[index];
+  list.classList.add('list');
   // card
-  const card = document.createElement("div");
-  card.classList.add("card");
-  const cardp = document.createElement("p");
-  const circle = document.createElement("div");
-  const edit = document.createElement("div");
-  const trash = document.createElement("div");
+  const card = document.createElement('div');
+  card.classList.add('card');
+  const cardp = document.createElement('p');
+  const circle = document.createElement('div');
+  const edit = document.createElement('div');
+  const trash = document.createElement('div');
   // card
   card.appendChild(circle);
   circle.innerHTML = circlesvg;
@@ -86,32 +88,57 @@ const createTask = (desc, number) => {
   trash.innerHTML = trashsvg;
   list.appendChild(card);
 };
-const boardkk = [
+const boardtitlecolor = [
   {
-    title: "to do",
-    color: "white",
+    title: 'To do',
+    color: 'white',
   },
   {
-    title: "In progress",
-    color: "yellow",
+    title: 'In progress',
+    color: 'yellow',
   },
   {
-    title: "Done",
-    color: "green",
+    title: 'Done',
+    color: 'green',
   },
   {
-    title: "Blocked",
-    color: "red",
+    title: 'Blocked',
+    color: 'red',
   },
 ];
-boardkk.map((element) => {
-  createBoard(element.title, 5, element.color);
+
+const data = {
+  todo: [
+    {
+      taskDesc: 'To do',
+    },
+    {
+      taskDesc: 'To do do do ',
+    },
+  ],
+  Inprogress: [
+    {
+      taskDesc: 'In progress',
+    },
+  ],
+  Done: [
+    {
+      taskDesc: 'Done',
+    },
+  ],
+  Blocked: [
+    {
+      taskDesc: 'Blocked',
+    },
+  ],
+};
+
+boardtitlecolor.map((element) => {
+  createBoard(element.title, 2, element.color);
 });
-createTask("Hello world", 0);
-createTask("Hello world", 0);
-createTask("Hello world2", 1);
-createTask("Hello world3", 2);
-createTask("Hello world3", 2);
-createTask("Hello world3", 3);
-createTask("Hello world3", 3);
-createTask("Hello world4", 3);
+
+const keys = Object.keys(data);
+
+keys.map((el, index) =>
+  data[el].map((task) => createTask(task.taskDesc, index))
+);
