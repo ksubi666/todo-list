@@ -36,9 +36,9 @@ const createElement = (tag, classList, innerText = '') => {
 };
 const topbutton = createElement('div', ['topbutton']);
 const button = createElement('button', [], 'Add Task');
+const container = createElement('div', ['container']);
 body.appendChild(topbutton);
 topbutton.appendChild(button);
-const container = createElement('div', ['container']);
 
 const createBoard = (text, countValue, color) => {
   const board = createElement('div', ['board']);
