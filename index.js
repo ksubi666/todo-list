@@ -1,5 +1,4 @@
 const body = document.getElementsByTagName('body')[0];
-// svg
 const circlesvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" stroke="white"/>
 </svg>
@@ -24,69 +23,56 @@ const trashsvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
 <path d="M9.33333 7.33333V11.3333" stroke="#A30000" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
-// top button
-const topbutton = document.createElement('div');
-topbutton.classList.add('topbutton');
-const button = document.createElement('button');
-// top button
+const createElement = (tag, classList, innerText = '') => {
+  const element = document.createElement(tag);
+
+  classList.forEach((className) => {
+    element.classList.add(className);
+  });
+
+  element.innerText = innerText;
+
+  return element;
+};
+const topbutton = createElement('div', ['topbutton']);
+const button = createElement('button', [], 'Add Task');
 body.appendChild(topbutton);
 topbutton.appendChild(button);
-button.innerText = 'Add Task';
-// container
-const container = document.createElement('div');
-container.classList.add('container');
+const container = createElement('div', ['container']);
 
-// create board
 const createBoard = (text, countValue, color) => {
-  // board
-  const board = document.createElement('div');
-  board.classList.add('board');
-  // list
-  const list = document.createElement('div');
-  list.classList.add('list');
-  // top title
-  const title = document.createElement('div');
-  title.classList.add('title');
-  const tasktitle = document.createElement('div');
-  tasktitle.classList.add('tasktitle');
-  const titleh = document.createElement('h4');
-  const taskp = document.createElement('p');
-  const taskbutton = document.createElement('button');
-  // task title
+  const board = createElement('div', ['board']);
+  const list = createElement('div', ['list']);
+  const title = createElement('div', ['title']);
+  const tasktitle = createElement('div', ['tasktitle']);
+  const titleh = createElement('h4', [], text);
+  const taskp = createElement('p', [], countValue);
+  const taskbutton = createElement('button', [color]);
   board.appendChild(title);
   title.appendChild(tasktitle);
   tasktitle.appendChild(taskbutton);
-  taskbutton.classList.add(color);
   tasktitle.appendChild(titleh);
-  titleh.innerText = text;
   title.appendChild(taskp);
-  taskp.innerText = countValue;
   container.appendChild(board);
   board.appendChild(list);
   body.appendChild(container);
 };
-// CreateTask function
 const createTask = (desc, index) => {
-  // list
   const list = document.getElementsByClassName('list')[index];
   list.classList.add('list');
-  // card
-  const card = document.createElement('div');
-  card.classList.add('card');
-  const cardp = document.createElement('p');
-  const circle = document.createElement('div');
-  const edit = document.createElement('div');
-  const trash = document.createElement('div');
-  // card
+  const card = createElement('div', ['card']);
+  const cardp = createElement('p', [], desc);
+  const circle = createElement('div', []);
+  const edit = createElement('div', []);
+  const trash = createElement('div', []);
   card.appendChild(circle);
-  circle.innerHTML = circlesvg;
   card.appendChild(cardp);
-  cardp.innerText = desc;
   card.appendChild(edit);
-  edit.innerHTML = editsvg;
   card.appendChild(trash);
-  trash.innerHTML = trashsvg;
   list.appendChild(card);
+  trash.innerHTML = trashsvg;
+  edit.innerHTML = editsvg;
+  circle.innerHTML = circlesvg;
 };
 const boardtitlecolor = [
   {
@@ -106,7 +92,6 @@ const boardtitlecolor = [
     color: 'red',
   },
 ];
-
 const data = {
   todo: [
     {
@@ -125,20 +110,28 @@ const data = {
     {
       taskDesc: 'Done',
     },
+    {
+      taskDesc: 'Done',
+    },
+    {
+      taskDesc: 'Done',
+    },
   ],
   Blocked: [
     {
       taskDesc: 'Blocked',
     },
+    {
+      taskDesc: 'Blocked',
+    },
   ],
 };
-
-boardtitlecolor.map((element) => {
+boardtitlecolor.forEach((element) => {
   createBoard(element.title, 2, element.color);
 });
 
 const keys = Object.keys(data);
 
-keys.map((el, index) =>
-  data[el].map((task) => createTask(task.taskDesc, index))
+keys.forEach((el, index) =>
+  data[el].forEach((task) => createTask(task.taskDesc, index))
 );
