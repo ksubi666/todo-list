@@ -23,62 +23,6 @@ const trashsvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
 <path d="M9.33333 7.33333V11.3333" stroke="#A30000" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
-const createElement = (tag, classList, innerText = '') => {
-  const element = document.createElement(tag);
-  classList.forEach((className) => {
-    element.classList.add(className);
-  });
-  element.innerText = innerText;
-  return element;
-};
-const topbutton = createElement('div', ['topbutton']);
-const button = createElement('button', [], 'Add Task');
-const container = createElement('div', ['container']);
-body.appendChild(topbutton);
-topbutton.appendChild(button);
-
-const createBoard = (text, countValue, color) => {
-  const board = createElement('div', ['board']);
-  const list = createElement('div', ['list']);
-  const title = createElement('div', ['title']);
-  const tasktitle = createElement('div', ['tasktitle']);
-  const titleh = createElement('h4', [], text);
-  const taskp = createElement('p', [], countValue);
-  const taskbutton = createElement('button', [color]);
-  board.appendChild(title);
-  title.appendChild(tasktitle);
-  tasktitle.appendChild(taskbutton);
-  tasktitle.appendChild(titleh);
-  title.appendChild(taskp);
-  container.appendChild(board);
-  board.appendChild(list);
-  body.appendChild(container);
-};
-const createTask = (desc, index) => {
-  const list = document.getElementsByClassName('list')[index];
-  list.classList.add('list');
-  const card = createElement('div', ['card']);
-  const cardp = createElement('p', [], desc);
-  const circle = createElement('div', []);
-  const edit = createElement('div', []);
-  const trash = createElement('div', ['trash']);
-  card.appendChild(circle);
-  card.appendChild(cardp);
-  card.appendChild(edit);
-  card.appendChild(trash);
-  list.appendChild(card);
-  trash.innerHTML = trashsvg;
-  edit.innerHTML = editsvg;
-  circle.innerHTML = circlesvg;
-  const deleteOnclick = () => {
-    console.log('delete');
-  };
-  const editOnclick = () => {
-    console.log('edit');
-  };
-  edit.onclick = editOnclick;
-  trash.onclick = deleteOnclick;
-};
 const boardtitlecolor = [
   {
     title: 'To do',
@@ -131,11 +75,102 @@ const data = {
     },
   ],
 };
+const createElement = (tag, classList, innerText = '') => {
+  const element = document.createElement(tag);
+  classList.forEach((className) => {
+    element.classList.add(className);
+  });
+  element.innerText = innerText;
+  return element;
+};
+const topbutton = createElement('div', ['topbutton']);
+const button = createElement('button', ['addTaskbutton'], 'Add Task');
+const container = createElement('div', ['container']);
+body.appendChild(topbutton);
+topbutton.appendChild(button);
+
+const backdrop = createElement('div', ['backdrop']);
+body.appendChild(backdrop);
+const dialog = createElement('div', ['dialog']);
+const task = createElement('div', ['task']);
+const taskName = createElement('label', [], 'Task name');
+const enterTask = createElement('input', [], 'Enter your task');
+const status = createElement('div', ['status']);
+const statusTaskLabel = createElement('label', []);
+const select = createElement('select', []);
+const option1 = createElement('option', [], 'To Do');
+const option2 = createElement('option', [], 'In Progress');
+const option3 = createElement('option', [], 'Done');
+const option4 = createElement('option', [], 'Blocked');
+const submit = createElement('button', ['submit'], 'Submit');
+backdrop.appendChild(dialog);
+dialog.appendChild(task);
+task.appendChild(taskName);
+task.appendChild(enterTask);
+dialog.appendChild(status);
+status.appendChild(statusTaskLabel);
+status.appendChild(select);
+select.appendChild(option1);
+select.appendChild(option2);
+select.appendChild(option3);
+select.appendChild(option4);
+dialog.appendChild(submit);
+option1.value = 'todo';
+option2.value = 'Inprogress';
+option3.value = 'Done';
+option4.value = 'Blocked';
+
+const addTaskFn = () => {
+  backdrop.style.display = 'flex';
+};
+
+button.onclick = addTaskFn;
+
+const createBoard = (text, countValue, color) => {
+  const board = createElement('div', ['board']);
+  const list = createElement('div', ['list']);
+  const title = createElement('div', ['title']);
+  const tasktitle = createElement('div', ['tasktitle']);
+  const titleh = createElement('h4', [], text);
+  const taskp = createElement('p', [], countValue);
+  const taskbutton = createElement('button', [color]);
+  board.appendChild(title);
+  title.appendChild(tasktitle);
+  tasktitle.appendChild(taskbutton);
+  tasktitle.appendChild(titleh);
+  title.appendChild(taskp);
+  container.appendChild(board);
+  board.appendChild(list);
+  body.appendChild(container);
+};
+const createTask = (desc, index) => {
+  const list = document.getElementsByClassName('list')[index];
+  list.classList.add('list');
+  const card = createElement('div', ['card']);
+  const cardp = createElement('p', [], desc);
+  const circle = createElement('div', []);
+  const edit = createElement('div', []);
+  const trash = createElement('div', ['trash']);
+  card.appendChild(circle);
+  card.appendChild(cardp);
+  card.appendChild(edit);
+  card.appendChild(trash);
+  list.appendChild(card);
+  trash.innerHTML = trashsvg;
+  edit.innerHTML = editsvg;
+  circle.innerHTML = circlesvg;
+  edit.addEventListener('click', () => editTask(card, text));
+  trash.addEventListener('click', () => removeTask(card));
+};
+const removeTask = (card) => {
+  card.remove();
+};
+const editTask = (card) => {};
 boardtitlecolor.forEach((element) => {
   createBoard(element.title, 2, element.color);
 });
 const keys = Object.keys(data);
 
 keys.forEach((el, index) =>
-  data[el].forEach((task) => createTask(task.taskDesc, index))
+  data[el].forEach((taskk) => createTask(taskk.taskDesc, index))
 );
