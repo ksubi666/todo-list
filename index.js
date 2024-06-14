@@ -25,13 +25,10 @@ const trashsvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
 `;
 const createElement = (tag, classList, innerText = '') => {
   const element = document.createElement(tag);
-
   classList.forEach((className) => {
     element.classList.add(className);
   });
-
   element.innerText = innerText;
-
   return element;
 };
 const topbutton = createElement('div', ['topbutton']);
@@ -64,7 +61,7 @@ const createTask = (desc, index) => {
   const cardp = createElement('p', [], desc);
   const circle = createElement('div', []);
   const edit = createElement('div', []);
-  const trash = createElement('div', []);
+  const trash = createElement('div', ['trash']);
   card.appendChild(circle);
   card.appendChild(cardp);
   card.appendChild(edit);
@@ -73,6 +70,14 @@ const createTask = (desc, index) => {
   trash.innerHTML = trashsvg;
   edit.innerHTML = editsvg;
   circle.innerHTML = circlesvg;
+  const deleteOnclick = () => {
+    console.log('delete');
+  };
+  const editOnclick = () => {
+    console.log('edit');
+  };
+  edit.onclick = editOnclick;
+  trash.onclick = deleteOnclick;
 };
 const boardtitlecolor = [
   {
@@ -119,7 +124,7 @@ const data = {
   ],
   Blocked: [
     {
-      taskDesc: 'Blocked',
+      taskDesc: 'kk',
     },
     {
       taskDesc: 'Blocked',
@@ -129,7 +134,6 @@ const data = {
 boardtitlecolor.forEach((element) => {
   createBoard(element.title, 2, element.color);
 });
-
 const keys = Object.keys(data);
 
 keys.forEach((el, index) =>
